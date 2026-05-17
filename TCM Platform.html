@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Платформа ТКМ — Гармония тела и духа</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Unbounded:wght@300;400;500;600;700&family=Onest:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN SYSTEM — 3 VARIANTS via CSS custom properties
+   ============================================================ */
+:root {
+  /* Russian typography (primary, larger) */
+  --fs-display: clamp(60px, 5.5vw, 88px);
+  --fs-h1:      clamp(38px, 3.8vw, 60px);
+  --fs-h2:      clamp(30px, 3vw, 48px);
+  --fs-h3:      clamp(24px, 2.4vw, 36px);
+  --fs-body:    clamp(16px, 1.7vw, 22px);
+  --fs-small:   clamp(14px, 1.4vw, 17px);
+  --fs-mono:    clamp(12px, 1.2vw, 15px);
+
+  /* Chinese text (secondary, smaller for评委 reference) */
+  --fs-cn-h3:   clamp(15px, 1.5vw, 22px);
+  --fs-cn-body: clamp(12px, 1.1vw, 15px);
+  --fs-cn-small: clamp(10px, 0.9vw, 13px);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
+
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ---- Variant A: Тёплая Земля ---- */
+[data-variant="A"] {
+  --bg:            #FDF8F2;
+  --surface:       #FFFBF7;
+  --surface-hover: #FFF4EA;
+  --primary:       #C67B5C;
+  --primary-dark:  #A85D3F;
+  --primary-light: #F0D5C5;
+  --accent:        #8FA88C;
+  --accent-light:  #D8E8D4;
+  --text:          #3C2415;
+  --text-secondary:#7A6455;
+  --text-muted:    #B0A094;
+  --border:        #E8D5C4;
+  --border-light:  #F2E6DA;
+  --font-display:  'Cormorant Garamond', 'Times New Roman', serif;
+  --font-body:     'Manrope', 'Helvetica Neue', sans-serif;
+  --font-mono:     'JetBrains Mono', 'Consolas', monospace;
+  --radius:        var(--radius-lg);
+  --radius-card:   var(--radius-md);
+  --herb-opacity:  0.05;
+  --vip-color:     #C2185B;
+}
+
+/* ---- Variant B: Травяная Свежесть ---- */
+[data-variant="B"] {
+  --bg:            #EDF4E8;
+  --surface:       #F7FAF4;
+  --surface-hover: #E5F0DE;
+  --primary:       #4A7C59;
+  --primary-dark:  #2D5A3A;
+  --primary-light: #CDE6D3;
+  --accent:        #C8A96E;
+  --accent-light:  #F0E5CC;
+  --text:          #1A231C;
+  --text-secondary:#5A6B5D;
+  --text-muted:    #96A898;
+  --border:        #D4E0D0;
+  --border-light:  #E8F0E4;
+  --font-display:  'Playfair Display', 'Times New Roman', serif;
+  --font-body:     'Onest', 'Helvetica Neue', sans-serif;
+  --font-mono:     'JetBrains Mono', 'Consolas', monospace;
+  --radius:        var(--radius-md);
+  --radius-card:   var(--radius-sm);
+  --herb-opacity:  0.06;
+  --vip-color:     #C2185B;
+}
+
+/* ---- Variant C: Чай и Дерево ---- */
+[data-variant="C"] {
+  --bg:            #FBF7F0;
+  --surface:       #FFFCF7;
+  --surface-hover: #FBF3E5;
+  --primary:       #8B5E3C;
+  --primary-dark:  #5C3520;
+  --primary-light: #E8D5C0;
+  --accent:        #7FA08E;
+  --accent-light:  #D4E5DB;
+  --text:          #2C1F14;
+  --text-secondary:#7A6B5D;
+  --text-muted:    #B5A898;
+  --border:        #E0D3C0;
+  --border-light:  #F0E8D8;
+  --font-display:  'Unbounded', 'Helvetica Neue', sans-serif;
+  --font-body:     'Manrope', 'Helvetica Neue', sans-serif;
+  --font-mono:     'JetBrains Mono', 'Consolas', monospace;
+  --radius:        4px;
+  --radius-card:   4px;
+  --herb-opacity:  0.04;
+  --vip-color:     #C2185B;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+/* Organic background: green-tinted orbs + taiji suggestion */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    /* Top half green wash */
+    linear-gradient(180deg, rgba(74,124,89,0.07) 0%, rgba(74,124,89,0.02) 50%, transparent 100%),
+    /* Taiji-inspired dual orb */
+    radial-gradient(ellipse 500px 500px at 88% 35%, var(--accent-light) 0.06, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 82% 35%, var(--primary-light) 0.06, transparent 70%),
+    /* Lower ambient orbs */
+    radial-gradient(ellipse 400px 300px at 15% 80%, var(--primary-light) calc(var(--herb-opacity) * 0.7), transparent),
+    radial-gradient(ellipse 350px 250px at 60% 90%, var(--accent-light) calc(var(--herb-opacity) * 0.5), transparent);
+}
+
+/* Chinese text: always smaller, muted */
+.cn-text {
+  font-size: var(--fs-cn-body);
+  color: var(--text-muted);
+  font-weight: 400;
+}
+.cn-sm { font-size: var(--fs-cn-small); color: var(--text-muted); }
+.cn-h3 { font-size: var(--fs-cn-h3); color: var(--text-muted); }
+
+/* ============================================================
+   TOP BAR
+   ============================================================ */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+  transition: background var(--transition), border-color var(--transition);
+}
+.variant-switcher { display: flex; gap: 6px; padding: 4px; background: var(--border-light); border-radius: var(--radius); }
+.variant-btn {
+  padding: 6px 16px; border: none; border-radius: calc(var(--radius) - 2px);
+  font-family: var(--font-body); font-size: var(--fs-small); font-weight: 500;
+  cursor: pointer; transition: all var(--transition);
+  background: transparent; color: var(--text-secondary); white-space: nowrap;
+}
+.variant-btn:hover { color: var(--text); }
+.variant-btn.active { background: var(--primary); color: #fff; }
+
+.main-nav { display: flex; gap: 4px; }
+.nav-btn {
+  padding: 8px 20px; border: none; border-radius: var(--radius);
+  font-family: var(--font-body); font-size: var(--fs-small); font-weight: 500;
+  cursor: pointer; transition: all var(--transition);
+  background: transparent; color: var(--text-secondary);
+}
+.nav-btn:hover { background: var(--border-light); color: var(--text); }
+.nav-btn.active { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; }
+
+/* ============================================================
+   PAGES CONTAINER
+   ============================================================ */
+.pages-container { position: relative; z-index: 1; min-height: calc(100vh - 64px); }
+.page { display: none; padding: 48px; max-width: 1440px; margin: 0 auto; animation: pageIn 0.35s ease; }
+.page.active { display: block; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ============================================================
+   PAGE 1: HOME — Balanced layout, taiji BG, green top
+   ============================================================ */
+.home-page { max-width: 1280px; }
+
+/* Hero section: full-width balanced */
+.home-hero {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  min-height: 75vh; align-items: center; padding: 20px 0;
+}
+.home-hero-left { display: flex; flex-direction: column; gap: 28px; }
+.home-hero-right {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+
+.brand-badge {
+  display: inline-flex; align-items: center; gap: 16px;
+  font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 600;
+  color: var(--primary-dark); line-height: 1.2;
+}
+.brand-badge .cn-brand {
+  font-size: var(--fs-cn-h3); font-weight: 700; color: var(--text-muted);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display); font-weight: 700;
+  line-height: 1.15; color: var(--text);
+  text-wrap: balance;
+}
+.hero-subtitle {
+  font-size: var(--fs-body); color: var(--text-secondary);
+  max-width: 500px; line-height: 1.7;
+}
+.hero-cards {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.hero-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 30px 28px;
+  cursor: pointer; transition: all var(--transition);
+  text-decoration: none; color: inherit; display: block;
+}
+.hero-card:hover {
+  border-color: var(--primary); box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.hero-card .card-icon {
+  font-size: var(--fs-h2); margin-bottom: 10px; color: var(--primary);
+}
+.hero-card .card-title {
+  font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 600;
+  margin-bottom: 4px; color: var(--text);
+}
+.hero-card .card-desc {
+  font-size: var(--fs-small); color: var(--text-secondary);
+}
+
+/* Taiji visual on right */
+.hero-visual {
+  width: 100%; max-width: 460px; aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(from 90deg,
+    var(--primary-light) 0deg 180deg,
+    rgba(255,255,255,0.45) 180deg 360deg);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 0 80px rgba(74,124,89,0.12), 0 0 160px rgba(74,124,89,0.06);
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; width: 44%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--primary-light);
+  top: 50%; left: 50%; transform: translate(-50%, -85%);
+}
+.hero-visual::after {
+  content: '';
+  position: absolute; width: 44%; aspect-ratio: 1; border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  bottom: 50%; right: 50%; transform: translate(50%, 85%);
+}
+.hero-visual .taiji-center {
+  position: relative; z-index: 2; text-align: center;
+}
+.hero-visual .taiji-title {
+  font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 700;
+  color: var(--primary-dark);
+}
+.hero-visual .taiji-sub {
+  font-size: var(--fs-small); color: var(--text-secondary); margin-top: 4px;
+}
+
+.user-icon-fab {
+  position: absolute; top: -8px; right: -8px; z-index: 3;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--transition);
+  border: 2px solid var(--primary); font-size: 22px;
+  box-shadow: var(--shadow-md);
+}
+.user-icon-fab:hover { transform: scale(1.08); background: var(--primary-light); }
+
+/* TCM culture text block below hero */
+.home-culture {
+  margin-top: 60px; padding: 48px 56px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  align-items: center;
+}
+.home-culture h3 {
+  font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 700;
+  margin-bottom: 16px;
+}
+.home-culture .culture-text {
+  font-size: var(--fs-body); color: var(--text-secondary); line-height: 1.9;
+}
+.home-culture .culture-link {
+  display: inline-block; margin-top: 20px;
+  font-size: var(--fs-body); font-weight: 700; color: var(--primary);
+  cursor: pointer; text-decoration: underline;
+  transition: color var(--transition);
+}
+.home-culture .culture-link:hover { color: var(--primary-dark); }
+
+/* AI module cards below */
+.home-modules {
+  margin-top: 48px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.home-module {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 32px;
+  cursor: pointer; transition: all var(--transition);
+}
+.home-module:hover { border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.home-module .mod-icon { font-size: 36px; margin-bottom: 14px; }
+.home-module h4 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 600; margin-bottom: 6px; }
+.home-module p { font-size: var(--fs-small); color: var(--text-secondary); line-height: 1.6; }
+
+/* ============================================================
+   PAGE 2: AI-ДИАГНОСТИКА
+   ============================================================ */
+.ai-page { display: flex; flex-direction: column; gap: 40px; }
+.ai-header { text-align: center; max-width: 680px; margin: 0 auto; }
+.ai-header h2 { font-family: var(--font-display); font-size: var(--fs-h1); font-weight: 700; margin-bottom: 8px; }
+.ai-header p { color: var(--text-secondary); font-size: var(--fs-body); }
+
+.ai-chat {
+  max-width: 800px; margin: 0 auto; width: 100%;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-xl); overflow: hidden;
+  display: flex; flex-direction: column; min-height: 500px;
+}
+.ai-messages { flex: 1; padding: 32px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+.ai-msg { display: flex; gap: 12px; max-width: 85%; }
+.ai-msg.ai   { align-self: flex-start; }
+.ai-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+.ai-msg .avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-small); font-weight: 600; font-family: var(--font-mono);
+}
+.ai-msg.ai .avatar   { background: var(--primary-light); color: var(--primary-dark); }
+.ai-msg.user .avatar { background: var(--accent-light); color: var(--primary-dark); }
+.ai-msg .bubble { padding: 14px 20px; border-radius: var(--radius-lg); font-size: var(--fs-body); line-height: 1.7; }
+.ai-msg.ai .bubble   { background: var(--border-light); color: var(--text); }
+.ai-msg.user .bubble { background: var(--primary-light); color: var(--text); }
+.ai-options { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.ai-option-btn {
+  padding: 12px 20px; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); font-family: var(--font-body); font-size: var(--fs-body);
+  cursor: pointer; text-align: left; transition: all var(--transition); color: var(--text);
+}
+.ai-option-btn:hover { border-color: var(--primary); background: var(--primary-light); }
+
+.ai-result { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); padding: 40px; margin-top: 32px; display: none; }
+.ai-result.visible { display: block; }
+.ai-result h3 { font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 700; margin-bottom: 20px; color: var(--primary-dark); }
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+.result-card { background: var(--border-light); border-radius: var(--radius); padding: 24px; }
+.result-card h4 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 600; margin-bottom: 8px; color: var(--primary-dark); }
+.result-card p { font-size: var(--fs-small); color: var(--text-secondary); line-height: 1.7; }
+.recommendations { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 24px; }
+.rec-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all var(--transition); }
+.rec-card:hover { border-color: var(--primary); }
+.rec-card .rec-icon { font-size: 28px; margin-bottom: 10px; }
+.rec-card h5 { font-family: var(--font-display); font-size: var(--fs-body); font-weight: 600; margin-bottom: 6px; }
+.rec-card p { font-size: var(--fs-small); color: var(--text-secondary); line-height: 1.6; }
+.rec-products { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.rec-product { background: var(--border-light); border-radius: var(--radius); padding: 20px; text-align: center; cursor: pointer; transition: all var(--transition); border: 1px solid transparent; }
+.rec-product:hover { border-color: var(--primary); background: var(--surface); }
+.rec-product .prod-box { width: 100%; aspect-ratio: 3/4; background: var(--border-light); border-radius: var(--radius-sm); margin-bottom: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.rec-product .prod-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rec-product .prod-name { font-weight: 600; font-size: var(--fs-small); }
+.rec-product .prod-price { font-size: var(--fs-small); color: var(--primary); font-weight: 600; margin-top: 4px; }
+
+/* ============================================================
+   PAGE 3: МАГАЗИН
+   ============================================================ */
+.shop-header { text-align: center; margin-bottom: 40px; }
+.shop-header h2 { font-family: var(--font-display); font-size: var(--fs-h1); font-weight: 700; margin-bottom: 8px; }
+.shop-header p { color: var(--text-secondary); font-size: var(--fs-body); }
+
+.shop-categories { display: flex; gap: 12px; justify-content: center; margin-bottom: 40px; flex-wrap: wrap; }
+.cat-tag { padding: 10px 24px; border: 1px solid var(--border); border-radius: 100px; font-family: var(--font-body); font-size: var(--fs-body); cursor: pointer; transition: all var(--transition); background: var(--surface); display: flex; align-items: center; gap: 8px; color: var(--text-secondary); }
+.cat-tag:hover { border-color: var(--primary); color: var(--text); }
+.cat-tag.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.cat-tag .close-x { font-size: 14px; opacity: 0.5; cursor: pointer; line-height: 1; }
+.shop-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+@media (max-width: 1200px) { .shop-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 900px)  { .shop-grid { grid-template-columns: repeat(2, 1fr); } }
+.shop-product { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: all var(--transition); }
+.shop-product:hover { border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.product-box-visual { aspect-ratio: 1; background: var(--border-light); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.product-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+
+.product-info { padding: 20px; }
+.product-info h4 { font-family: var(--font-display); font-size: var(--fs-body); font-weight: 600; margin-bottom: 4px; }
+.product-info .prod-cat { font-size: var(--fs-small); color: var(--text-muted); }
+.product-info .prod-price { margin-top: 12px; font-weight: 700; font-size: var(--fs-h3); color: var(--primary); font-family: var(--font-mono); }
+
+/* ============================================================
+   PAGE 4: ЛИЧНЫЙ КАБИНЕТ — History + VIP Video
+   ============================================================ */
+.user-page { display: grid; grid-template-columns: 370px 1fr; gap: 40px; min-height: calc(100vh - 200px); }
+.user-sidebar { display: flex; flex-direction: column; gap: 24px; }
+
+.user-profile { display: flex; align-items: center; gap: 16px; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.user-avatar {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 30px; color: var(--primary-dark); flex-shrink: 0;
+}
+.user-info .user-name { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 700; }
+.user-info .user-vip {
+  display: inline-block; padding: 3px 12px;
+  background: var(--vip-color); color: #fff;
+  border-radius: 100px; font-size: 13px; font-weight: 800;
+  margin-top: 4px; letter-spacing: 0.05em;
+}
+
+.user-history { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; overflow-y: auto; }
+.user-history h3 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 600; margin-bottom: 20px; }
+.history-item { padding: 16px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); margin-bottom: 12px; cursor: pointer; transition: all var(--transition); font-size: var(--fs-small); }
+.history-item:hover { border-color: var(--primary); background: var(--border-light); }
+.history-item .hi-date { color: var(--text-muted); font-size: 12px; }
+.history-item .hi-type { font-weight: 600; color: var(--primary-dark); }
+.history-item .hi-preview { color: var(--text-secondary); margin-top: 4px; }
+
+/* VIP video section */
+.user-vip-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; }
+.user-vip-section h3 { font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 700; margin-bottom: 4px; }
+.user-vip-section .vip-badge-lg {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 800; font-size: var(--fs-h3); color: var(--vip-color);
+  margin-bottom: 24px;
+}
+.vip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; flex: 1; }
+.vip-video-card {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  cursor: pointer; transition: all var(--transition);
+  background: var(--border-light); aspect-ratio: 16/10;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.vip-video-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.vip-video-card .video-thumb {
+  width: 100%; height: 100%; object-fit: cover;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 20%, transparent), color-mix(in srgb, var(--accent) 25%, transparent));
+  display: flex; align-items: center; justify-content: center;
+}
+.vip-video-card .play-overlay {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: background var(--transition);
+}
+.vip-video-card:hover .play-overlay { background: rgba(0,0,0,0.35); }
+.vip-video-card .play-triangle {
+  width: 0; height: 0;
+  border-left: 28px solid rgba(255,255,255,0.9);
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+}
+.vip-video-card .vip-lock {
+  position: absolute; top: 12px; right: 12px;
+  background: var(--vip-color); color: #fff;
+  padding: 4px 12px; border-radius: 100px;
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.05em;
+}
+.vip-video-card .video-label {
+  position: absolute; bottom: 12px; left: 12px; right: 12px;
+  color: #fff; font-size: var(--fs-small); font-weight: 600;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* ============================================================
+   PAGE 5: НАУКА
+   ============================================================ */
+.science-page { max-width: 1000px; margin: 0 auto; }
+.science-header { text-align: center; margin-bottom: 48px; }
+.science-header h2 { font-family: var(--font-display); font-size: var(--fs-h1); font-weight: 700; margin-bottom: 12px; }
+.science-header p { font-size: var(--fs-body); color: var(--text-secondary); max-width: 600px; margin: 0 auto; }
+.science-toc { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+.science-toc-btn { padding: 10px 24px; border: 1px solid var(--border); border-radius: 100px; background: var(--surface); font-family: var(--font-body); font-size: var(--fs-small); cursor: pointer; transition: all var(--transition); color: var(--text-secondary); }
+.science-toc-btn:hover, .science-toc-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.science-articles { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.science-article { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: all var(--transition); cursor: pointer; }
+.science-article:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+.science-article .art-num { font-family: var(--font-display); font-size: var(--fs-h1); color: var(--primary-light); font-weight: 700; line-height: 1; }
+.science-article h3 { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: 600; margin: 12px 0 8px; }
+.science-article p { font-size: var(--fs-small); color: var(--text-secondary); line-height: 1.7; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1024px) {
+  .home-hero { grid-template-columns: 1fr; gap: 40px; min-height: auto; }
+  .hero-visual { max-width: 320px; }
+  .home-culture { grid-template-columns: 1fr; }
+  .home-modules { grid-template-columns: 1fr 1fr; }
+  .user-page { grid-template-columns: 1fr; }
+  .vip-grid { grid-template-columns: 1fr 1fr; }
+  .shop-grid { grid-template-columns: repeat(2, 1fr); }
+  .result-grid { grid-template-columns: 1fr; }
+  .recommendations { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .page { padding: 24px; }
+  .top-bar { padding: 0 16px; flex-wrap: wrap; height: auto; padding: 12px 16px; gap: 8px; }
+  .hero-cards { grid-template-columns: 1fr; }
+  .home-modules { grid-template-columns: 1fr; }
+  .vip-grid { grid-template-columns: 1fr; }
+  .shop-grid { grid-template-columns: 1fr 1fr; }
+  .science-articles { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body data-variant="B">
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<header class="top-bar">
+  <div class="variant-switcher" id="variantSwitcher">
+    <button class="variant-btn" data-v="A" title="Тёплая Земля">A — Земля</button>
+    <button class="variant-btn active" data-v="B" title="Травяная Свежесть">B — Свежесть</button>
+    <button class="variant-btn" data-v="C" title="Чай и Дерево">C — Дерево</button>
+  </div>
+  <nav class="main-nav" id="mainNav">
+    <button class="nav-btn active" data-page="home">Главная</button>
+    <button class="nav-btn" data-page="ai">AI-Диагностика</button>
+    <button class="nav-btn" data-page="shop">Магазин</button>
+    <button class="nav-btn" data-page="user">Личный кабинет</button>
+    <button class="nav-btn" data-page="science">Наука</button>
+  </nav>
+</header>
+
+<!-- ============================================================
+     PAGES
+     ============================================================ -->
+<div class="pages-container">
+
+<!-- ---------- PAGE 1: HOME ---------- -->
+<section class="page active" id="page-home">
+<div class="home-page">
+
+  <div class="home-hero">
+    <div class="home-hero-left">
+      <div class="brand-badge">
+        <span>Взращивать Ци</span>
+        <span class="cn-brand">一生养气</span>
+      </div>
+
+      <h1 class="hero-title">Откройте путь<br>к гармонии тела<br>и духа</h1>
+      <p class="cn-text">探索身体与精神的和谐之道</p>
+
+      <p class="hero-subtitle">
+        Традиционная китайская медицина раскрывает мудрость тысячелетий:
+        познайте свой тип телосложения, восстановите баланс Инь и Ян,
+        откройте доступ к осознанному благополучию.
+      </p>
+      <p class="cn-sm">传统中医揭示千年智慧：认识体质，恢复阴阳平衡，开启有觉知的健康生活</p>
+
+      <div class="hero-cards">
+        <div class="hero-card" onclick="navigateTo('ai')">
+          <div class="card-icon">﹢</div>
+          <div class="card-title">Начать беседу <span class="cn-sm">开始对话</span></div>
+          <div class="card-desc">AI-помощник определит ваш тип телосложения по методике ТКМ</div>
+        </div>
+        <div class="hero-card" onclick="navigateTo('shop')">
+          <div class="card-icon">◫</div>
+          <div class="card-title">Магазин <span class="cn-sm">商店</span></div>
+          <div class="card-desc">Средства для восстановления баланса: питание, фитотерапия, здоровье</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-hero-right">
+      <div class="user-icon-fab" onclick="navigateTo('user')" title="Личный кабинет">👤</div>
+      <div class="hero-visual">
+        <div class="taiji-center">
+          <div class="taiji-title">陰陽 平衡</div>
+          <div class="taiji-sub">Баланс Инь и Ян</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TCM culture text block -->
+  <div class="home-culture">
+    <div>
+      <h3>養氣 · 調身 · 治未病</h3>
+      <p class="cn-text">养气 · 调身 · 治未病</p>
+    </div>
+    <div>
+      <p class="culture-text">
+        «Когда Ци течёт свободно — тело исцеляется само.»
+        Тысячи лет китайская медицина учит: профилактика важнее лечения.
+        Узнайте свой тип телосложения и получите персональные рекомендации
+        по питанию, движению и образу жизни. В основе ТКМ лежит концепция
+        «治未病» — лечить болезнь до её возникновения, укрепляя защитные
+        силы организма и приводя к гармонии энергии Ци.
+      </p>
+      <span class="culture-link" onclick="navigateTo('user')">Узнать больше → <span class="cn-sm">了解更多</span></span>
+    </div>
+  </div>
+
+  <!-- AI / Shop / Science modules -->
+  <div class="home-modules">
+    <div class="home-module" onclick="navigateTo('ai')">
+      <div class="mod-icon">🧠</div>
+      <h4>AI-Диагностика <span class="cn-sm">AI体质检测</span></h4>
+      <p>Ответьте на вопросы — получите анализ телосложения и персональные рекомендации</p>
+    </div>
+    <div class="home-module" onclick="navigateTo('shop')">
+      <div class="mod-icon">🛒</div>
+      <h4>Магазин ТКМ <span class="cn-sm">中医商城</span></h4>
+      <p>Продукты для здоровья: фитотерапия, питание, средства для восстановления баланса</p>
+    </div>
+    <div class="home-module" onclick="navigateTo('science')">
+      <div class="mod-icon">📖</div>
+      <h4>База знаний <span class="cn-sm">科普知识</span></h4>
+      <p>Фундаментальные концепции ТКМ: Инь-Ян, У-Син, меридианы и типы телосложения</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ---------- PAGE 2: AI-ДИАГНОСТИКА ---------- -->
+<section class="page" id="page-ai">
+  <div class="ai-page">
+    <div class="ai-header">
+      <h2>AI-Диагностика телосложения</h2>
+      <p class="cn-h3">AI 体质检测</p>
+      <p>Ответьте на несколько вопросов — наш помощник определит ваш тип телосложения по канонам ТКМ и предложит персональные рекомендации</p>
+    </div>
+
+    <div class="ai-chat" id="aiChat">
+      <div class="ai-messages" id="aiMessages"><!-- dynamic --></div>
+    </div>
+
+    <div class="ai-result" id="aiResult">
+      <h3>Результат анализа: Синдром недостатка Инь <span class="cn-h3">阴虚证</span></h3>
+      <div class="result-grid">
+        <div class="result-card">
+          <h4>Тип телосложения <span class="cn-sm">体质类型</span></h4>
+          <p><strong>Инь-недостаточный тип (阴虚体质)</strong> — характеризуется дефицитом увлажняющих и охлаждающих ресурсов организма. Проявления: сухость во рту, жар в ладонях, ночная потливость, склонность к тревожности.</p>
+        </div>
+        <div class="result-card">
+          <h4>Синдромальный паттерн <span class="cn-sm">症候类型</span></h4>
+          <p><strong>Недостаток Инь почек и сердца</strong> (心肾阴虚). Сердцебиение, холодный пот на ладонях — признаки дисбаланса сердечной Инь. Поясничная слабость и ночная потливость указывают на недостаток Инь почек.</p>
+        </div>
+      </div>
+
+      <h3 style="font-family:var(--font-display);font-size:var(--fs-h3);margin-bottom:16px;">Рекомендации «Лечить до болезни» <span class="cn-h3">治未病建议</span></h3>
+
+      <div class="recommendations">
+        <div class="rec-card">
+          <div class="rec-icon">📍</div>
+          <h5>Точки акупрессуры <span class="cn-sm">穴位</span></h5>
+          <p><strong>Тай-си (KI3) 太溪</strong> — точка почек, укрепляет Инь. <strong>Шэнь-мэнь (HT7) 神门</strong> — успокаивает сердце. <strong>Сань-инь-цзяо (SP6) 三阴交</strong> — гармонизирует Инь. Массируйте по 2–3 минуты ежедневно.</p>
+        </div>
+        <div class="rec-card">
+          <div class="rec-icon">🥢</div>
+          <h5>Питание <span class="cn-sm">饮食</span></h5>
+          <p>Упор на увлажняющие продукты: груши, ягоды годжи, кунжут, тофу, тыква, корень лотоса. Исключить острое и жареное. Пить тёплую воду с мёдом.</p>
+        </div>
+        <div class="rec-card">
+          <div class="rec-icon">☯</div>
+          <h5>Образ жизни <span class="cn-sm">生活方式</span></h5>
+          <p>Ложиться до 23:00. Практиковать тайцзи или цигун. Избегать переутомления и эмоциональных перегрузок. Медитация 15 минут в день.</p>
+        </div>
+      </div>
+
+      <h4 style="font-family:var(--font-display);font-size:var(--fs-body);font-weight:600;margin:24px 0 12px;">Рекомендованные продукты <span class="cn-sm">推荐产品</span></h4>
+      <div class="rec-products">
+        <div class="rec-product">
+          <div class="prod-box"><img src="images/六味地黄.jpg" alt="Эликсир Лювэй Дихуан" class="prod-img" loading="lazy"></div>
+          <div class="prod-name">Эликсир Лювэй Дихуан</div>
+          <div class="prod-price">2 800 ₽</div>
+        </div>
+        <div class="rec-product">
+          <div class="prod-box"><img src="images/滋阴茶.jpg" alt="Чай «Инь-Баланс»" class="prod-img" loading="lazy"></div>
+          <div class="prod-name">Чай «Инь-Баланс»</div>
+          <div class="prod-price">1 450 ₽</div>
+        </div>
+        <div class="rec-product">
+          <div class="prod-box"><img src="images/按摩油.jpg" alt="Масло для акупрессуры" class="prod-img" loading="lazy"></div>
+          <div class="prod-name">Масло для акупрессуры</div>
+          <div class="prod-price">960 ₽</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- PAGE 3: МАГАЗИН ---------- -->
+<section class="page" id="page-shop">
+  <div class="shop-header">
+    <h2>Магазин ТКМ <span class="cn-h3">中医商城</span></h2>
+    <p>Продукты для восстановления баланса организма по канонам традиционной китайской медицины</p>
+  </div>
+
+  <div class="shop-categories" id="shopCats">
+    <button class="cat-tag active" data-cat="all">Все товары <span class="cn-sm">全部</span></button>
+    <button class="cat-tag" data-cat="diet">🥢 Питание <span class="cn-sm">饮食</span></button>
+    <button class="cat-tag" data-cat="sport">🏃 Движение <span class="cn-sm">运动</span></button>
+    <button class="cat-tag" data-cat="herbs">🌿 Фитотерапия <span class="cn-sm">草药</span></button>
+    <button class="cat-tag" data-cat="health">💊 Средства для здоровья <span class="cn-sm">保健产品</span></button>
+  </div>
+
+  <div class="shop-grid" id="shopGrid"><!-- dynamic --></div>
+</section>
+
+<!-- ---------- PAGE 4: ЛИЧНЫЙ КАБИНЕТ ---------- -->
+<section class="page" id="page-user">
+  <div class="user-page">
+    <div class="user-sidebar">
+      <div class="user-profile">
+        <div class="user-avatar">?</div>
+        <div class="user-info">
+          <div class="user-name">Алексей Смирнов</div>
+          <div class="user-vip">VIP</div>
+        </div>
+      </div>
+
+      <div class="user-history" id="userHistory">
+        <h3>История проверок <span class="cn-sm">检测历史</span></h3>
+        <div class="history-item">
+          <div class="hi-date">12 мая 2026</div>
+          <div class="hi-type">Недостаток Инь — 阴虚</div>
+          <div class="hi-preview">Сухость во рту, ночная потливость, жар в ладонях…</div>
+        </div>
+        <div class="history-item">
+          <div class="hi-date">28 апреля 2026</div>
+          <div class="hi-type">Застой Ци — 气滞</div>
+          <div class="hi-preview">Раздражительность, ощущение кома в горле…</div>
+        </div>
+        <div class="history-item">
+          <div class="hi-date">15 марта 2026</div>
+          <div class="hi-type">Сырость-Жар — 湿热</div>
+          <div class="hi-preview">Тяжесть в теле, жирный блеск кожи, горечь во рту…</div>
+        </div>
+        <div class="history-item">
+          <div class="hi-date">20 февраля 2026</div>
+          <div class="hi-type">Недостаток Ян — 阳虚</div>
+          <div class="hi-preview">Зябкость, холодные конечности, быстрая утомляемость…</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="user-vip-section">
+      <h3>Видеокурсы ТКМ <span class="cn-h3">中医视频课程</span></h3>
+      <div class="vip-badge-lg">
+        <span>VIP</span>
+        <span style="font-size:var(--fs-small);color:var(--text-secondary);font-weight:400;">— эксклюзивный доступ</span>
+      </div>
+
+      <div class="vip-grid">
+        <div class="vip-video-card">
+          <div class="video-thumb">🧘 Тайцзи</div>
+          <div class="play-overlay"><div class="play-triangle"></div></div>
+          <div class="vip-lock">VIP</div>
+          <div class="video-label">Тайцзицюань для начинающих</div>
+        </div>
+        <div class="vip-video-card">
+          <div class="video-thumb">🫁 Цигун</div>
+          <div class="play-overlay"><div class="play-triangle"></div></div>
+          <div class="vip-lock">VIP</div>
+          <div class="video-label">Цигун: 8 кусков парчи (八段锦)</div>
+        </div>
+        <div class="vip-video-card">
+          <div class="video-thumb">📍 Акупрессура</div>
+          <div class="play-overlay"><div class="play-triangle"></div></div>
+          <div class="vip-lock">VIP</div>
+          <div class="video-label">Массаж точек для здоровья</div>
+        </div>
+        <div class="vip-video-card">
+          <div class="video-thumb">🥢 Питание</div>
+          <div class="play-overlay"><div class="play-triangle"></div></div>
+          <div class="vip-lock">VIP</div>
+          <div class="video-label">Питание по 5 элементам (五行饮食)</div>
+        </div>
+        <div class="vip-video-card">
+          <div class="video-thumb">🌿 Травы</div>
+          <div class="play-overlay"><div class="play-triangle"></div></div>
+          <div class="vip-lock">VIP</div>
+          <div class="video-label">Китайская фитотерапия: основы</div>
+        </div>
+        <div class="vip-video-card">
+          <div class="video-thumb">☯ Баланс</div>
+          <div class="play-overlay"><div class="play-triangle"></div></div>
+          <div class="vip-lock">VIP</div>
+          <div class="video-label">Баланс Инь-Ян в повседневной жизни</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ---------- PAGE 5: НАУКА ---------- -->
+<section class="page" id="page-science">
+  <div class="science-page">
+    <div class="science-header">
+      <h2>Наука ТКМ <span class="cn-h3">中医科普</span></h2>
+      <p>Погрузитесь в фундаментальные концепции традиционной китайской медицины — от философии до практических методик</p>
+    </div>
+
+    <div class="science-toc" id="scienceToc">
+      <button class="science-toc-btn active" data-topic="all">Все темы</button>
+      <button class="science-toc-btn" data-topic="yin-yang">Инь и Ян <span class="cn-sm">阴阳</span></button>
+      <button class="science-toc-btn" data-topic="wu-xing">У-Син <span class="cn-sm">五行</span></button>
+      <button class="science-toc-btn" data-topic="qi">Ци и меридианы <span class="cn-sm">气与经络</span></button>
+      <button class="science-toc-btn" data-topic="constitution">Типы телосложения <span class="cn-sm">体质类型</span></button>
+    </div>
+
+    <div class="science-articles" id="scienceArticles"><!-- dynamic --></div>
+  </div>
+</section>
+
+</div><!-- /pages-container -->
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  // ==================== VARIANT SWITCHING ====================
+  const body = document.body;
+  const variantBtns = document.querySelectorAll('#variantSwitcher .variant-btn');
+
+  variantBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      variantBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      body.setAttribute('data-variant', btn.dataset.v);
+      localStorage.setItem('tcm-variant', btn.dataset.v);
+    });
+  });
+
+  // ==================== PAGE NAVIGATION ====================
+  const navBtns = document.querySelectorAll('#mainNav .nav-btn');
+  const pages = document.querySelectorAll('.page');
+
+  window.navigateTo = function(pageName) {
+    navBtns.forEach(b => b.classList.remove('active'));
+    pages.forEach(p => p.classList.remove('active'));
+    const targetNav = document.querySelector(`#mainNav .nav-btn[data-page="${pageName}"]`);
+    const targetPage = document.getElementById(`page-${pageName}`);
+    if (targetNav) targetNav.classList.add('active');
+    if (targetPage) targetPage.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (pageName === 'ai') initAIChat();
+  };
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => navigateTo(btn.dataset.page));
+  });
+
+  // ==================== AI CHAT ====================
+  const questions = [
+    { q: 'Здравствуйте! Я ваш AI-помощник по ТКМ. Давайте начнём с общего состояния. Как часто вы чувствуете усталость в течение дня?', opts: ['1 — Практически никогда, я полон энергии', '2 — Иногда после нагрузок', '3 — Часто, особенно к вечеру', '4 — Почти постоянно, сил не хватает'] },
+    { q: 'Опишите ощущения в теле. Бывает ли у вас чувство жара или холода без очевидной причины?', opts: ['1 — Нет, температура тела всегда комфортна', '2 — Иногда ощущаю лёгкий жар в ладонях', '3 — Часто мёрзнут руки и ноги', '4 — Постоянно бросает то в жар, то в холод'] },
+    { q: 'Как бы вы описали свой сон за последний месяц?', opts: ['1 — Засыпаю быстро, сплю крепко', '2 — Иногда просыпаюсь среди ночи', '3 — Трудно заснуть, часто просыпаюсь', '4 — Почти не сплю, ночная потливость'] },
+    { q: 'Оцените своё эмоциональное состояние. Насколько вы спокойны или раздражительны?', opts: ['1 — Спокоен и уравновешен', '2 — Бывают периоды тревоги', '3 — Часто раздражаюсь по мелочам', '4 — Постоянная тревога и беспокойство'] },
+    { q: 'Есть ли у вас конкретные физические проявления — такие как холодный пот на ладонях, учащённое сердцебиение, сухость во рту?', opts: ['1 — Нет выраженных проявлений', '2 — Иногда замечаю сухость во рту', '3 — Часто бывает сердцебиение, холодные ладони', '4 — Всё перечисленное и даже больше'] }
+  ];
+
+  let currentQ = 0, answers = [], chatInit = false;
+
+  function initAIChat() {
+    if (chatInit) return;
+    chatInit = true; currentQ = 0; answers = [];
+    const c = document.getElementById('aiMessages');
+    if (!c) return;
+    c.innerHTML = '';
+    document.getElementById('aiResult').classList.remove('visible');
+    addMessage('ai', questions[0].q, true);
+  }
+
+  function addMessage(role, text, withOptions) {
+    const c = document.getElementById('aiMessages');
+    const d = document.createElement('div');
+    d.className = 'ai-msg ' + role;
+    d.innerHTML = `<div class="avatar">${role === 'ai' ? 'AI' : 'Вы'}</div><div><div class="bubble">${text}</div>${withOptions ? renderOptions() : ''}</div>`;
+    c.appendChild(d);
+    c.scrollTop = c.scrollHeight;
+    if (withOptions) {
+      d.querySelectorAll('.ai-option-btn').forEach(b => {
+        b.addEventListener('click', () => handleAnswer(+b.dataset.val));
+      });
+    }
+  }
+
+  function renderOptions() {
+    return `<div class="ai-options">${questions[currentQ].opts.map((o, i) => `<button class="ai-option-btn" data-val="${i+1}">${o}</button>`).join('')}</div>`;
+  }
+
+  function handleAnswer(val) {
+    answers.push(val);
+    addMessage('user', questions[currentQ].opts[val-1], false);
+    currentQ++;
+    if (currentQ < questions.length) setTimeout(() => addMessage('ai', questions[currentQ].q, true), 500);
+    else setTimeout(() => showResult(), 600);
+  }
+
+  function showResult() {
+    const total = answers.reduce((a,b)=>a+b,0);
+    let constitution, syndrome, features;
+    if (total <= 7) {
+      constitution = 'Сбалансированный тип (平和质)';
+      syndrome = 'Гармоничное состояние. Выраженные синдромы не выявлены.';
+      features = 'Ваше тело находится в относительном балансе Инь и Ян. Продолжайте поддерживать текущий образ жизни.';
+    } else if (total <= 10) {
+      constitution = 'Тенденция к недостатку Инь (阴虚倾向)';
+      syndrome = 'Лёгкий недостаток Инь. Признаки: эпизодическая сухость, умеренная ночная потливость.';
+      features = 'Организм сигнализирует о начинающемся дефиците увлажняющих и охлаждающих ресурсов. Рекомендуется увлажняющая диета и нормализация режима сна.';
+    } else if (total <= 13) {
+      constitution = 'Недостаток Инь (阴虚质)';
+      syndrome = 'Недостаток Инь почек и сердца (心肾阴虚). Выраженные проявления: сухость во рту, жар в ладонях, учащённое сердцебиение, ночная потливость, тревожность.';
+      features = 'Классическая картина дефицита Инь: охлаждающая и увлажняющая энергия организма истощена. Требуется системный подход к восстановлению.';
+    } else {
+      constitution = 'Выраженный недостаток Инь с застоем Ци (阴虚夹气滞)';
+      syndrome = 'Глубокий дефицит Инь, осложнённый застоем Ци. Проявления: сильная сухость, постоянное сердцебиение, холодный пот, тревожность, нарушения сна.';
+      features = 'Тяжёлая форма дисбаланса, требующая комплексного подхода. Необходима консультация специалиста ТКМ.';
+    }
+    addMessage('ai', `<strong>Анализ завершён.</strong> Ваш тип телосложения: <em>${constitution}</em>.<br><br>${features}<br><br>Подробные рекомендации — ниже.`, false);
+    const rd = document.getElementById('aiResult');
+    rd.classList.add('visible');
+    rd.querySelector('h3').innerHTML = `Результат анализа: ${constitution} <span class="cn-h3">${constitution.includes('平和') ? '平和质' : constitution.includes('阴虚夹') ? '阴虚夹气滞' : constitution.includes('倾向') ? '阴虚倾向' : '阴虚质'}</span>`;
+    rd.querySelector('.result-grid').innerHTML = `<div class="result-card"><h4>Тип телосложения <span class="cn-sm">体质类型</span></h4><p><strong>${constitution}</strong> — ${features}</p></div><div class="result-card"><h4>Синдромальный паттерн <span class="cn-sm">症候类型</span></h4><p><strong>${syndrome}</strong></p></div>`;
+    rd.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ==================== SHOP ====================
+  const shopProducts = [
+    { cat: 'herbs', name: 'Эликсир Лювэй Дихуан 六味地黄', desc: 'Для восполнения Инь', price: '2 800 ₽', img: 'images/六味地黄.jpg' },
+    { cat: 'herbs', name: 'Отвар Гуйчжи Тан 桂枝汤', desc: 'Гармонизация защитной Ци', price: '3 200 ₽', img: 'images/桂枝汤.jpg' },
+    { cat: 'diet', name: 'Чай «Инь-Баланс» 滋阴茶', desc: 'Увлажняющий травяной сбор', price: '1 450 ₽', img: 'images/滋阴茶.jpg' },
+    { cat: 'diet', name: 'Ягоды годжи (премиум) 枸杞', desc: 'Восполнение Инь почек', price: '890 ₽', img: 'images/枸杞.jpg' },
+    { cat: 'diet', name: 'Смесь пяти злаков ТКМ 五谷粉', desc: 'Питание селезёнки', price: '680 ₽', img: 'images/五谷粉.jpg' },
+    { cat: 'sport', name: 'Коврик для цигун 气功垫', desc: 'Натуральный пробковый', price: '4 500 ₽', img: 'images/气功垫.jpg' },
+    { cat: 'sport', name: 'Мяч Баодин (пара) 保定球', desc: 'Для упражнений рук', price: '1 200 ₽', img: 'images/保定球.jpg' },
+    { cat: 'health', name: 'Масло для акупрессуры 按摩油', desc: 'Согревающее с имбирём', price: '960 ₽', img: 'images/按摩油.jpg' },
+    { cat: 'health', name: 'Пластырь для точек ТКМ 穴位贴', desc: 'Набор 20 шт.', price: '540 ₽', img: 'images/穴位贴.jpg' },
+    { cat: 'herbs', name: 'Настойка Женьшеня 人参酊', desc: 'Восполнение первичной Ци', price: '3 800 ₽', img: 'images/人参酊.jpg' },
+    { cat: 'diet', name: 'Гриб Рейши (сушёный) 灵芝', desc: 'Успокоение духа Шэнь', price: '2 100 ₽', img: 'images/灵芝.jpg' },
+    { cat: 'sport', name: 'Деревянный массажёр 按摩棒', desc: 'Для меридианного массажа', price: '1 750 ₽', img: 'images/按摩棒.jpg' },
+  ];
+
+  let activeCat = 'all';
+  function renderShop() {
+    const g = document.getElementById('shopGrid');
+    const f = activeCat === 'all' ? shopProducts : shopProducts.filter(p => p.cat === activeCat);
+    g.innerHTML = f.map(p => `<div class="shop-product"><div class="product-box-visual"><img src="${p.img}" alt="${p.name}" class="product-img" loading="lazy"></div><div class="product-info"><h4>${p.name}</h4><div class="prod-cat">${p.desc}</div><div class="prod-price">${p.price}</div></div></div>`).join('');
+  }
+  renderShop();
+  document.querySelectorAll('#shopCats .cat-tag').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('#shopCats .cat-tag').forEach(x => x.classList.remove('active'));
+      t.classList.add('active'); activeCat = t.dataset.cat; renderShop();
+    });
+  });
+
+  // ==================== SCIENCE ====================
+  const scienceArticles = [
+    { topic: 'yin-yang', title: 'Закон Инь-Ян 阴阳法则', num: '01', preview: 'Философская основа ТКМ: дуализм природных явлений, взаимозависимость и взаимопревращение противоположностей. Инь и Ян — не статичные категории, а динамический процесс.' },
+    { topic: 'yin-yang', title: 'Инь-Ян в диагностике 八纲辨证', num: '02', preview: 'Восемь принципов диагностики (ба-ган) базируются на различении Инь и Ян состояний. Жар — это Ян, холод — Инь. Избыток — Ян, недостаток — Инь.' },
+    { topic: 'wu-xing', title: 'Пять элементов: введение 五行入门', num: '03', preview: 'У-Син — модель, описывающая циклы изменений в природе и теле. Каждый элемент управляет парой органов: Дерево — печень и желчный пузырь, Огонь — сердце и тонкий кишечник…' },
+    { topic: 'wu-xing', title: 'Эмоции и элементы 情志与五行', num: '04', preview: 'Гнев вредит Дереву (печени), радость — Огню (сердцу), размышления — Земле (селезёнке), печаль — Металлу (лёгким), страх — Воде (почкам). Умеренность в эмоциях — ключ к здоровью.' },
+    { topic: 'qi', title: 'Ци: дыхание жизни 气——生命之息', num: '05', preview: 'Ци — центральное понятие ТКМ. Она одновременно материальна и функциональна: это и воздух, которым мы дышим, и энергия, которая движет кровь и поддерживает жизнь.' },
+    { topic: 'qi', title: 'Меридианная система 经络系统', num: '06', preview: 'Сеть каналов, по которым циркулирует Ци. 12 основных меридианов + 8 чудесных сосудов образуют энергетический каркас тела. Акупунктура воздействует именно на эту систему.' },
+    { topic: 'constitution', title: 'Конституциональная типология 体质九分法', num: '07', preview: 'В отличие от западной медицины, ТКМ выделяет 9 типов телосложения. Знание своего типа позволяет предупредить болезни задолго до их проявления — в этом суть «лечения до болезни».' },
+    { topic: 'constitution', title: 'Профилактика по ТКМ 治未病', num: '08', preview: '"Лечить до болезни" (治未病) — высшая форма врачебного искусства. Через знание своего телосложения, сезонные ритмы и правильное питание можно предотвратить большинство заболеваний.' },
+  ];
+
+  let activeTopic = 'all';
+  function renderScience() {
+    const g = document.getElementById('scienceArticles');
+    const f = activeTopic === 'all' ? scienceArticles : scienceArticles.filter(a => a.topic === activeTopic);
+    g.innerHTML = f.map(a => `<div class="science-article"><div class="art-num">${a.num}</div><h3>${a.title}</h3><p>${a.preview}</p></div>`).join('');
+  }
+  renderScience();
+  document.querySelectorAll('#scienceToc .science-toc-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#scienceToc .science-toc-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active'); activeTopic = b.dataset.topic; renderScience();
+    });
+  });
+
+  // ==================== INIT ====================
+  const savedVariant = localStorage.getItem('tcm-variant');
+  if (savedVariant && ['A','B','C'].includes(savedVariant)) {
+    body.setAttribute('data-variant', savedVariant);
+    variantBtns.forEach(b => b.classList.toggle('active', b.dataset.v === savedVariant));
+  }
+
+})();
+</script>
+</body>
+</html>
